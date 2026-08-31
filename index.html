@@ -1141,10 +1141,10 @@ document.addEventListener('click',e=>{
   if(c) copy(c.dataset.copy,'계좌번호가 복사되었습니다');
 });
 
-/* ---- 방명록 + RSVP (Firebase Firestore) ----
-   Firebase 초기화는 하단 <script type="module">에서 처리하고,
-   window.WDB 로 저장/조회 함수를 노출합니다.
-   Firestore 미연결 시 localStorage로 자동 폴백합니다. */
+/* ---- 방명록 + RSVP ----
+   현재는 외부 DB를 연결하지 않아 localStorage에 저장됩니다.
+   (작성한 브라우저에서만 보입니다. 문서 하단 주석 참고)
+   window.WDB 를 정의해 두면 아래 분기가 자동으로 그쪽을 사용합니다. */
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 /* 방명록 렌더 (삭제 버튼 포함) */
@@ -1246,7 +1246,7 @@ loadGuestbook();
   });
 })();
 
-/* Firebase 준비 완료 시 방명록 다시 로드 */
+/* 외부 DB(window.WDB)를 나중에 붙일 경우 준비 완료 시 방명록 다시 로드 */
 window.addEventListener('wdb-ready',()=>loadGuestbook());
 
 /* ---- 카카오 지도 (JS 키 있을 때만) ---- */
@@ -1466,63 +1466,16 @@ function openGuestSnap(){
 </script>
 
 <!-- =========================================================
-     Firebase 연동 (방명록·RSVP 저장)
-     - 단일 HTML/GitHub Pages 구조이므로 CDN 모듈 방식 사용
-     - 아래 firebaseConfig는 공개되어도 되는 값(보안은 Firestore 규칙으로 관리)
+     Firebase 연동 제거됨
+     원본은 원작자의 Firestore(wedding-sw-js-260823)로 방명록·RSVP를
+     저장했습니다. 남의 데이터베이스에 쓰지 않도록 블록을 제거했고,
+     window.WDB 가 없으므로 방명록·참석여부는 자동으로 localStorage
+     폴백으로 동작합니다 (작성한 브라우저에서만 보입니다).
+
+     실제 방명록이 필요하면 본인 Firebase 프로젝트를 만들고
+     원본 저장소의 <script type="module"> 블록을 가져와
+     firebaseConfig 만 본인 값으로 바꿔 넣으세요.
      ========================================================= -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, getDoc, deleteDoc, doc, query, orderBy, limit, serverTimestamp }
-  from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyD0NDzSZnSBynhuhlpryV9ta4dhMuphLbg",
-  authDomain: "wedding-sw-js-260823.firebaseapp.com",
-  projectId: "wedding-sw-js-260823",
-  storageBucket: "wedding-sw-js-260823.firebasestorage.app",
-  messagingSenderId: "990437928831",
-  appId: "1:990437928831:web:8cbabd8430484b776ff44a"
-};
-
-try{
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.WDB = {
-    ready: true,
-    async addGuestbook(entry){
-      await addDoc(collection(db,'guestbook'), {
-        name: entry.name, msg: entry.msg, when: entry.when, pw: entry.pw, createdAt: serverTimestamp()
-      });
-    },
-    async listGuestbook(){
-      const q = query(collection(db,'guestbook'), orderBy('createdAt','desc'), limit(100));
-      const snap = await getDocs(q);
-      // pw는 화면에 노출하지 않음
-      return snap.docs.map(d=>{ const x=d.data(); return {id:d.id, name:x.name, msg:x.msg, when:x.when}; });
-    },
-    async deleteGuestbook(id, pw){
-      const ref = doc(db,'guestbook',id);
-      const snap = await getDoc(ref);
-      if(!snap.exists()) return false;
-      if(snap.data().pw !== pw) return false;   // 비밀번호 불일치
-      await deleteDoc(ref);
-      return true;
-    },
-    async addRsvp(data){
-      await addDoc(collection(db,'rsvp'), {
-        side: data.side, attend: data.attend, name: data.name, count: data.count,
-        createdAt: serverTimestamp()
-      });
-    }
-  };
-  // 메인 스크립트에 준비 완료 알림
-  window.dispatchEvent(new Event('wdb-ready'));
-}catch(e){
-  console.error('Firebase 초기화 실패:', e);
-  // 실패 시 window.WDB.ready 가 없으므로 자동으로 localStorage 폴백
-}
-</script>
 
 </body>
 </html>

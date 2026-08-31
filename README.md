@@ -90,14 +90,20 @@ python tools/wedding_site.py status
 
 ## 알려진 이슈
 
-### 1. 방명록·참석여부가 원작자의 Firebase로 저장됩니다 ⚠️
+### 1. 방명록·참석여부는 브라우저에만 저장됩니다
 
-`index.html` 맨 아래 `firebaseConfig` 는 원작자의 프로젝트(`wedding-sw-js-260823`)를 그대로 가리킵니다.
-**이 상태로 공개하면 하객이 남긴 방명록과 참석여부가 남의 데이터베이스에 들어갑니다.**
+원본은 원작자의 Firebase(`wedding-sw-js-260823`)로 방명록·RSVP를 저장했습니다. 남의 데이터베이스에 쓰지 않도록 **Firebase 블록을 제거했습니다.**
 
-바꾸려면 Firebase 콘솔에서 프로젝트 생성 → Firestore Database 생성 → 웹 앱 등록 후, 나오는 설정값을 `firebaseConfig` 에 붙여넣으세요. `guestbook` 과 `rsvp` 컬렉션에 대한 읽기/쓰기 규칙도 열어 줘야 합니다.
+지금은 `window.WDB` 가 없어 코드가 자동으로 localStorage 폴백으로 동작합니다. 방명록 UI와 참석여부 폼은 그대로 쓸 수 있지만, **작성한 기기·브라우저에서만 보입니다.** 하객끼리 공유되지 않습니다.
 
-Firebase 초기화에 실패하면 코드가 자동으로 localStorage 폴백으로 넘어갑니다. 방명록을 아예 쓰지 않으려면 해당 `<script type="module">` 블록을 지우면 됩니다.
+하객이 공유하는 진짜 방명록이 필요하면:
+
+1. Firebase 콘솔에서 프로젝트 생성 → Firestore Database 생성 → 웹 앱 등록
+2. [원본 저장소](https://github.com/kakaopark857/sangwon_jisu.wedding/blob/main/index.html) 맨 아래의 `<script type="module">` 블록을 `</body>` 앞에 가져오기
+3. 그 안의 `firebaseConfig` 만 본인 값으로 교체
+4. Firestore 규칙에서 `guestbook`·`rsvp` 컬렉션 읽기/쓰기 허용
+
+`window.WDB` 만 정의되면 기존 분기가 자동으로 그쪽을 사용하므로, 다른 코드는 고칠 필요가 없습니다.
 
 ### 2. 카카오 지도
 
