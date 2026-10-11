@@ -1024,7 +1024,7 @@ var NAVER_MAP_KEY_ID = 'oy5gqykaqf';
 var LAT=37.4005008,LNG=127.1114555,osm=box.innerHTML;
 window.navermap_authFailure=function(){box.innerHTML=osm};
 window.__nmapInit=function(){try{var c=new naver.maps.LatLng(LAT,LNG);
-  box.innerHTML='';var m=new naver.maps.Map(box,{center:c,zoom:16,draggable:false,pinchZoom:false,scrollWheel:false,keyboardShortcuts:false,disableDoubleClickZoom:true,zoomControl:true,zoomControlOptions:{position:naver.maps.Position.TOP_RIGHT,style:naver.maps.ZoomControlStyle.SMALL},mapDataControl:false,scaleControl:false,logoControlOptions:{position:naver.maps.Position.BOTTOM_LEFT}});
+  box.innerHTML='';var m=new naver.maps.Map(box,{center:c,zoom:16,draggable:true,pinchZoom:true,scrollWheel:false,keyboardShortcuts:false,disableDoubleClickZoom:false,zoomControl:true,zoomControlOptions:{position:naver.maps.Position.TOP_RIGHT,style:naver.maps.ZoomControlStyle.SMALL},mapDataControl:false,scaleControl:false,logoControlOptions:{position:naver.maps.Position.BOTTOM_LEFT}});
   new naver.maps.Marker({position:c,map:m});
   new naver.maps.Marker({position:c,map:m,icon:{content:'<div class="nm-pin">W스퀘어컨벤션</div>',anchor:new naver.maps.Point(0,0)}});
 }catch(e){box.innerHTML=osm}};
