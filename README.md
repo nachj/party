@@ -11,7 +11,8 @@
 | `src/blocks.html` · `core.css` · `core.js` | 공통 조각 · 스타일 · 동작(달력·카운트다운·라이트박스·탭·계좌 복사·참석 여부·방명록) |
 | `src/photos/` | 들어가는 사진(17 = 표지 · 나머지는 Unsplash 샘플 · `CREDITS.md`) |
 | `src/icons/` | Tabler Icons(MIT) 중 쓰는 것 |
-| `src/photo-edit/enhance.py` | 표지 사진 보정 스크립트(원본 사진은 저장소에 올리지 않음) |
+| `wedding.ics` | 캘린더 일정(아이폰에서 '이벤트 추가'로 열림) |
+| `server/` | 참석 여부·방명록·하객 사진 저장소(구글 시트 + Apps Script) · 설치 = `server/README.md` · 점검 `node server/test-code.js` |
 
 ## 고치고 다시 만들기
 ```bash
@@ -22,7 +23,8 @@ cd src && python3 build.py      # Pillow 필요 · 결과 = ../index.html
 GitHub Pages(main 브랜치 루트). 검색엔진 노출은 `noindex` 로 막아 두었다.
 
 ## 출처
-- 사진: Unsplash License 샘플(작가는 `src/photos/CREDITS.md`) · 실제 촬영본으로 바꿀 예정
+- 사진: 표지 = 두 사람 사진 · 나머지 Unsplash License 샘플(작가는 `src/photos/CREDITS.md`) · 실제 촬영본으로 바꿀 예정
+- 지도: 네이버 지도 API(키 = 등록 주소에서만 동작) · 대체 그림 © OpenStreetMap contributors
 - 음악: Pachelbel, Canon in D · United States Air Force Band Strolling Strings(퍼블릭 도메인 · 앞 2분)
 - 글꼴: Google Fonts(EB Garamond · Gowun Batang · Bodoni Moda · Geist Mono · OFL) · Pretendard(OFL)
 - 아이콘: Tabler Icons(MIT)

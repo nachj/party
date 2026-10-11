@@ -194,6 +194,10 @@ form>.btn-pri{padding:0 22px}
 .gp-pick{margin-top:16px;position:relative}
 .gp-pick:focus-within{outline:2px solid var(--acc);outline-offset:3px}
 .gp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:12px}
+.gp-grid li{position:relative}
+.gp-grid li[data-st=wait] img,.gp-grid li[data-st=up] img{opacity:.45}
+.gp-grid li[data-st=fail]::after{content:"다시";position:absolute;inset:auto 4px 4px auto;padding:1px 6px;border-radius:999px;background:#B42318;color:#FCFCFD;font-size:11px}
+.gp-grid li[data-st=ok]::after{content:"✓";position:absolute;right:4px;bottom:4px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--acc);color:#FCFCFD;font-size:11px}
 .gp-grid img{aspect-ratio:1;object-fit:cover;width:100%;border-radius:4px}
 .gp-toggle{margin-top:12px;min-height:44px;padding:0 12px;font-size:13px;color:var(--sub);text-decoration:underline;text-underline-offset:3px}
 

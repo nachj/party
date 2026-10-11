@@ -120,7 +120,7 @@
     <p class="gp-t">오늘 찍은 사진을 나눠 주세요</p>
     <label class="btn-pri gp-pick"><span>사진 고르기</span><i class="b-ic">{{icon:photo-plus}}</i><input type="file" accept="image/*" multiple class="sr" id="gp-file"></label>
     <ul class="gp-grid" id="gp-grid" aria-label="고른 사진 미리 보기"></ul>
-    <p class="gp-s">시안에서는 이 기기에서만 미리 보여요.</p>
+    <p class="gp-s">한 번에 20장까지 · 사진은 두 사람의 드라이브에만 저장돼요.</p>
   </div>
   <button type="button" class="gp-toggle" data-gp-toggle aria-pressed="false">시안 보기: 열린 상태</button>
 </div>
@@ -195,6 +195,7 @@
     <div class="grab" data-grab><span></span></div>
     <div class="sheet-h"><h2 id="gb-t">축하 메시지 쓰기</h2><button type="button" class="sheet-x" data-close aria-label="닫기">{{icon:x}}</button></div>
     <form id="gb-form" novalidate>
+      <input name="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
       <div class="field"><label for="gb-name">이름</label><input class="inp" id="gb-name" name="name" maxlength="12" autocomplete="name" aria-describedby="gb-name-err"><p class="err" id="gb-name-err" hidden>{{icon:alert-circle}}이름을 적어 주세요</p></div>
       <div class="field"><label for="gb-pw">비밀번호</label><input class="inp" id="gb-pw" name="pw" type="password" inputmode="numeric" maxlength="8" aria-describedby="gb-pw-help gb-pw-err"><p class="help" id="gb-pw-help">숫자 4~8자리 · 글을 지울 때 써요</p><p class="err" id="gb-pw-err" hidden>{{icon:alert-circle}}숫자 4자리 이상으로 적어 주세요</p></div>
       <div class="field"><label for="gb-msg">축하 메시지</label><textarea class="inp" id="gb-msg" name="msg" maxlength="200" rows="4" aria-describedby="gb-cnt gb-msg-err"></textarea><p class="help count" id="gb-cnt">0 / 200</p><p class="err" id="gb-msg-err" hidden>{{icon:alert-circle}}메시지를 적어 주세요</p></div>

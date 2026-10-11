@@ -50,21 +50,26 @@
   };
   tick(); setInterval(tick, 1000);
 
-  // .ics
+  // 캘린더에 추가: 아이폰 = 사이트의 wedding.ics 로 이동(사파리가 '이벤트 추가' 화면을 띄움) · 안드로이드 = 구글 캘린더 일정 추가 화면(앱) · 컴퓨터 = .ics 파일 받기
+  const ICS = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//changjoon-youngju//invitation//KO', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
+    'UID:20270529T053000Z-changjoon-youngju', 'DTSTAMP:20261011T000000Z', 'DTSTART:20270529T053000Z', 'DTEND:20270529T073000Z',
+    'SUMMARY:나창준 · 김영주 결혼식', 'LOCATION:W스퀘어컨벤션 L층 그레이스홀\\, 경기 성남시 분당구 판교역로226번길 16',
+    'DESCRIPTION:2027년 5월 29일 토요일 오후 2시 30분', 'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:내일 결혼식이 있어요', 'END:VALARM',
+    'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const GCAL = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('나창준 · 김영주 결혼식') +
+    '&dates=20270529T053000Z/20270529T073000Z&ctz=Asia/Seoul&location=' + encodeURIComponent('W스퀘어컨벤션 L층 그레이스홀, 경기 성남시 분당구 판교역로226번길 16') +
+    '&details=' + encodeURIComponent('2027년 5월 29일 토요일 오후 2시 30분');
   document.addEventListener('click', e => {
     if (!e.target.closest('[data-ics]')) return;
-    const stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//changjoon-youngju//invitation//KO', 'CALSCALE:GREGORIAN', 'BEGIN:VEVENT',
-      'UID:20270529T053000Z-changjoon-youngju', 'DTSTAMP:' + stamp, 'DTSTART:20270529T053000Z', 'DTEND:20270529T073000Z',
-      'SUMMARY:나창준 · 김영주 결혼식', 'LOCATION:W스퀘어컨벤션 L층 그레이스홀\\, 경기 성남시 분당구 판교역로226번길 16',
-      'DESCRIPTION:2027년 5월 29일 토요일 오후 2시 30분', 'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:내일 결혼식이 있어요', 'END:VALARM',
-      'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+    if (ios && location.protocol.startsWith('http')) { location.href = new URL('wedding.ics', location.href).href; return; }
+    if (/Android/i.test(ua)) { location.href = GCAL; return; }
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+    a.href = URL.createObjectURL(new Blob([ICS], { type: 'text/calendar;charset=utf-8' }));
     a.download = 'changjoon-youngju-20270529.ics';
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    toast('캘린더 파일을 받았어요');
+    toast('캘린더 파일을 받았어요 · 열면 캘린더에 추가돼요');
   });
 
   // 복사 (클립보드 → execCommand → 실패 시 글자 선택)
@@ -133,6 +138,14 @@
     g.addEventListener('pointerup', up); g.addEventListener('pointercancel', up);
   });
 
+  // 저장소: Google Apps Script 웹 앱(server/Code.gs) · window.WEDDING_API 가 비어 있으면 이 기기에만 저장(시안 모드)
+  const API = (window.WEDDING_API || '').trim();
+  const api = async (body, get) => {
+    const r = await fetch(get ? API + '?' + new URLSearchParams(body) : API, get ? {} : { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+    const j = await r.json(); if (!j.ok) throw new Error(j.error || 'fail'); return j;
+  };
+  const cid = store.get('cid', '') || (() => { const v = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2)) ; store.set('cid', v); return v; })();
+
   // RSVP
   const rf = $('#rsvp-form');
   if (rf) {
@@ -151,7 +164,11 @@
       if (!nm.value.trim()) { err.hidden = false; nm.setAttribute('aria-invalid', 'true'); nm.focus(); return; }
       const btn = $('[type=submit]', rf), label = btn.textContent;
       btn.disabled = true; btn.textContent = '보내는 중';
-      setTimeout(() => { const d = Object.fromEntries(new FormData(rf)); d.name = d.name.trim(); store.set(KEY, d); btn.disabled = false; btn.textContent = label; showDone(d); }, 700);
+      const d = Object.fromEntries(new FormData(rf)); d.name = d.name.trim();
+      (API ? api({ action: 'rsvp', cid, ...d }) : new Promise(r => setTimeout(r, 500)))
+        .then(() => { store.set(KEY, d); showDone(d); })
+        .catch(() => toast('전달하지 못했어요. 잠시 뒤 다시 눌러 주세요'))
+        .finally(() => { btn.disabled = false; btn.textContent = label; });
     });
     $('[data-rsvp-edit]').addEventListener('click', () => { done.hidden = true; rf.hidden = false; nm.focus(); });
   }
@@ -160,7 +177,8 @@
   const gbList = $('#gb-list');
   if (gbList) {
     const KEY = 'gb-' + ID, tpl = $('#tpl-gb'), more = $('#gb-more'), empty = $('#gb-empty'), f = $('#gb-form');
-    let items = store.get(KEY, []), shown = 3;
+    let items = API ? [] : store.get(KEY, []), shown = 3;
+    if (API) api({ action: 'gb_list' }, true).then(j => { items = j.items; render(); }).catch(() => {});
     const render = () => {
       gbList.replaceChildren(...items.slice(0, shown).map((m, i) => {
         const li = tpl.content.firstElementChild.cloneNode(true);
@@ -175,8 +193,10 @@
     gbList.addEventListener('submit', e => {
       e.preventDefault();
       const i = +e.target.closest('li').dataset.i;
-      // ponytail: 데모라 비밀번호를 이 기기 localStorage 에 그대로 둔다. 실서비스는 서버에서 해시 비교
-      if ($('input', e.target).value === items[i].pw) { items.splice(i, 1); store.set(KEY, items); render(); toast('메시지를 지웠어요'); } else toast('비밀번호가 맞지 않아요');
+      // 시안 모드(API 없음)만 이 기기에 비밀번호를 둔다 · 서버 모드는 Code.gs 가 소금+SHA-256 으로 비교
+      const pwv = $('input', e.target).value;
+      if (API) { api({ action: 'gb_del', id: items[i].id, pw: pwv }).then(() => { items.splice(i, 1); render(); toast('메시지를 지웠어요'); }).catch(x => toast(x.message === 'pw' ? '비밀번호가 맞지 않아요' : '지우지 못했어요. 잠시 뒤 다시 해 주세요')); return; }
+      if (pwv === items[i].pw) { items.splice(i, 1); store.set(KEY, items); render(); toast('메시지를 지웠어요'); } else toast('비밀번호가 맞지 않아요');
     });
     const cnt = $('#gb-cnt'), msg = f.elements.msg;
     msg.addEventListener('input', () => { cnt.textContent = msg.value.length + ' / 200'; });
@@ -189,10 +209,15 @@
         if (bad) { el.setAttribute('aria-invalid', 'true'); first = first || el; } else el.removeAttribute('aria-invalid');
       });
       if (first) { first.focus(); return; }
-      const k = new Date(Date.now() + 9 * 3600e3);
+      const k = new Date(Date.now() + 9 * 3600e3), sb = $('[type=submit]', f), done = () => { render(); f.reset(); cnt.textContent = '0 / 200'; closeSheet(f.closest('.sheet-wrap')); toast('축하 메시지를 남겼어요'); };
+      if (API) {
+        sb.disabled = true;
+        api({ action: 'gb_add', name: nm.value.trim(), msg: msg.value.trim(), pw: pw.value, hp: (f.elements.hp || {}).value || '' })
+          .then(j => { items.unshift(j.item); done(); }).catch(() => toast('남기지 못했어요. 잠시 뒤 다시 해 주세요')).finally(() => { sb.disabled = false; });
+        return;
+      }
       items.unshift({ name: nm.value.trim(), msg: msg.value.trim(), pw: pw.value, date: `${k.getUTCFullYear()}.${pad(k.getUTCMonth() + 1)}.${pad(k.getUTCDate())}` });
-      store.set(KEY, items); render(); f.reset(); cnt.textContent = '0 / 200';
-      closeSheet(f.closest('.sheet-wrap')); toast('축하 메시지를 남겼어요');
+      store.set(KEY, items); done();
     });
   }
 
@@ -201,13 +226,25 @@
   if (gp) {
     const tg = $('[data-gp-toggle]', gp), grid = $('#gp-grid'), file = $('#gp-file');
     const set = open => { gp.dataset.state = open ? 'open' : 'locked'; tg.setAttribute('aria-pressed', open); tg.textContent = open ? '시안 보기: 잠긴 상태' : '시안 보기: 열린 상태'; };
-    set(Date.now() >= T);
+    set(Date.now() >= T - 3600e3);   // 예식 1시간 전부터(서버 CFG.PHOTO_OPEN_AT 과 같게)
+    tg.hidden = !/[?&]preview/.test(location.search);
     tg.addEventListener('click', () => set(gp.dataset.state !== 'open'));
-    file.addEventListener('change', () => {
-      const fs = Array.from(file.files).filter(x => x.type.startsWith('image/')).slice(0, 9);
+    const shrink = x => new Promise((ok, no) => { const im = new Image(); im.onload = () => { const k = Math.min(1, 1600 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(im.src); ok(c.toDataURL('image/jpeg', 0.85).split(',')[1]); }; im.onerror = no; im.src = URL.createObjectURL(x); });
+    file.addEventListener('change', async () => {
+      const fs = Array.from(file.files).filter(x => x.type.startsWith('image/')).slice(0, 20);
+      if (!fs.length) return;
       $$('img', grid).forEach(i => URL.revokeObjectURL(i.src));
-      grid.replaceChildren(...fs.map(x => { const li = document.createElement('li'), im = new Image(); im.src = URL.createObjectURL(x); im.alt = '고른 사진'; li.append(im); return li; }));
-      if (fs.length) toast(`사진 ${fs.length}장을 골랐어요`);
+      const lis = fs.map(x => { const li = document.createElement('li'), im = new Image(); im.src = URL.createObjectURL(x); im.alt = '고른 사진'; li.append(im); li.dataset.st = 'wait'; return li; });
+      grid.replaceChildren(...lis);
+      if (!API) { toast(`사진 ${fs.length}장을 골랐어요 · 시안이라 올리지는 않아요`); return; }
+      let ok = 0;
+      for (let i = 0; i < fs.length; i++) {
+        lis[i].dataset.st = 'up'; toast(`사진 올리는 중 ${i + 1} / ${fs.length}`);
+        try { await api({ action: 'photo', name: store.get('gp-name', ''), type: 'image/jpeg', data: await shrink(fs[i]) }); lis[i].dataset.st = 'ok'; ok++; }
+        catch (x) { lis[i].dataset.st = 'fail'; if (x.message === 'closed') { toast('지금은 사진을 올릴 수 없어요'); break; } }
+      }
+      toast(ok === fs.length ? `사진 ${ok}장을 보냈어요. 고맙습니다!` : `${ok}장 보냄 · ${fs.length - ok}장은 다시 올려 주세요`);
+      file.value = '';
     });
   }
 

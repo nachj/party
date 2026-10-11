@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-id="a02" data-op="2800">
+<html lang="ko" data-id="a02" data-op="3800">
 <head>
 {{block:head}}
 <meta name="theme-color" content="#FCFCFD">
@@ -49,12 +49,20 @@
 .cv-names i{font-family:var(--f-dis);font-style:italic;font-weight:400;color:var(--acc);margin:0 4px}
 .cv-meta{font-size:14px;line-height:1.6;color:var(--sub);text-align:right}
 @keyframes spin{to{transform:rotate(360deg)}}
-html.play .mk{animation:mkO 1s var(--ease) .2s both}
-html.play .mk-in{animation:mkI 1s var(--ease) .2s both}
-html.play .mk.r,html.play .mk.r .mk-in{animation-delay:.34s}
-html.play .cv-ph{animation:phup .9s var(--ease) 1.05s both}
-html.play .badge{animation:pop .6s var(--ease) 1.5s both,spin 24s linear 1.5s infinite}
-html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var(--ease) 1.5s both}
+/* 첫 화면: 파란 선이 왼쪽 위에서 시작해 표지 둘레 직사각형을 먼저 그린다(10-11 사용자) */
+.cv-rect{position:absolute;inset:calc(10px + env(safe-area-inset-top)) 10px calc(10px + env(safe-area-inset-bottom));z-index:0;pointer-events:none}
+html.play .op-skip{animation:skipOut .4s var(--ease) 2.2s both}   /* 이름 줄이 뜨기 전에 안내 문구를 치운다 */
+@keyframes skipOut{to{opacity:0}}
+html.play .cv-rect .e-t{animation:sx .35s linear .1s both}
+html.play .cv-rect .e-r{animation:sy .35s linear .45s both}
+html.play .cv-rect .e-b{animation:sx .35s linear .8s both}
+html.play .cv-rect .e-l{animation:sy .35s linear 1.15s both}
+html.play .mk{animation:mkO 1s var(--ease) 1.5s both}
+html.play .mk-in{animation:mkI 1s var(--ease) 1.5s both}
+html.play .mk.r,html.play .mk.r .mk-in{animation-delay:1.64s}
+html.play .cv-ph{animation:phup .9s var(--ease) 2.25s both}
+html.play .badge{animation:pop .6s var(--ease) 2.7s both,spin 24s linear 2.7s infinite}
+html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var(--ease) 2.7s both}
 @keyframes mkO{from{transform:translateX(-101%)}}
 @keyframes mkI{from{transform:translateX(101%)}}
 @keyframes phup{from{opacity:0;transform:translateY(8px)}}
@@ -195,6 +203,7 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
 <div id="opening" aria-hidden="true"><p class="op-skip">화면을 누르면 바로 넘어가요</p></div>
 <main class="page">
   <header class="cover">
+    <div class="cv-rect" aria-hidden="true"><i class="e e-t"></i><i class="e e-r"></i><i class="e e-b"></i><i class="e e-l"></i></div>
     <div class="cv-folio mono"><span>Spring 2027</span><span>Pangyo, Seongnam</span></div>
     <h1 class="mast"><span class="mk"><span class="mk-in">MAY</span></span><span class="mk r"><span class="mk-in">29</span></span><span class="sr">나창준 김영주 결혼합니다</span></h1>
     <div class="cv-body">
@@ -335,6 +344,11 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
   </footer>
 </main>
 {{block:chrome}}
+<script>
+/* 참석 여부·방명록·하객 사진 저장소 = Google Apps Script 웹 앱 주소(server/README.md 대로 배포 후 붙여 넣기).
+   비어 있으면 이 기기에만 저장되는 시안 모드로 동작한다. */
+window.WEDDING_API = '';
+</script>
 <script>{{js}}</script>
 <script>
 /* 네이버 지도: NCP 콘솔 Maps Application(Dynamic Map · Web 서비스 URL = https://nachj.github.io)에서 받은 Client ID 를 아래에 넣는다.
