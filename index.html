@@ -1028,7 +1028,7 @@ window.__nmapInit=function(){try{var c=new naver.maps.LatLng(LAT,LNG);
   new naver.maps.Marker({position:c,map:m});
   new naver.maps.Marker({position:c,map:m,icon:{content:'<div class="nm-pin">W스퀘어컨벤션</div>',anchor:new naver.maps.Point(0,0)}});
 }catch(e){box.innerHTML=osm}};
-var sc=document.createElement('script');sc.src='https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId='+encodeURIComponent(NAVER_MAP_KEY_ID)+'&callback=__nmapInit';sc.onerror=function(){box.innerHTML=osm};document.head.appendChild(sc);})();
+var sc=document.createElement('script');sc.src='https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId='+encodeURIComponent(NAVER_MAP_KEY_ID);sc.onload=function(){window.__nmapInit()};sc.onerror=function(){box.innerHTML=osm};   /* callback 파라미터는 호출되지 않아(10-11 실측) onload 로 */document.head.appendChild(sc);})();
 </script>
 <script>
 /* 엽서 묶음(A06 방식): 밀면 다음·이전 장 · 짧게 누르면 core 라이트박스(data-lb) · 끌었을 땐 클릭 막음 */
