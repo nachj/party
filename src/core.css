@@ -89,6 +89,14 @@ form>.btn-pri{padding:0 22px}
 .btn-line .b-ic{background:var(--tint);color:var(--acc)}
 .btn-line:active{transform:scale(.98)}
 @media (hover:hover) and (pointer:fine){.btn-line:hover .b-ic,.btn-pri:hover .b-ic,.mapbtn:hover .b-ic{transform:translate(2px,-1px)}}
+.ct-pop{width:min(86vw,320px);padding:26px 22px 20px;border:0;border-radius:16px;background:var(--sheet-bg,#FCFCFD);color:var(--ink);text-align:center;box-shadow:0 18px 48px rgba(22,26,35,.24)}
+.ct-pop::backdrop{background:rgba(22,26,35,.42)}
+.ct-pop-k{font-size:13px;color:var(--sub)}
+.ct-pop-t{margin-top:4px;font-size:19px;font-weight:700}
+.ct-pop-n{margin-top:12px;font-size:22px;font-weight:600;letter-spacing:.04em;color:var(--acc);font-variant-numeric:tabular-nums;user-select:all}
+.ct-pop-h{margin-top:10px;font-size:13px;color:var(--sub)}
+.ct-pop-a{display:flex;gap:8px;justify-content:center;margin-top:18px}
+.ct-pop-a .btn-line{min-width:0;flex:1;justify-content:center}
 .note{margin-top:14px;font-size:13px;color:var(--sub);text-align:center}
 .done{text-align:center;padding:16px 0 8px}
 .done-ic{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--acc);color:var(--on-acc);margin-bottom:14px}

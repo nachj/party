@@ -145,18 +145,24 @@
     <div class="grab" data-grab><span></span></div>
     <div class="sheet-h"><h2 id="ct-t">연락하기</h2><button type="button" class="sheet-x" data-close aria-label="닫기">{{icon:x}}</button></div>
     <div class="ct-grp"><h3>신랑 측</h3><ul class="ct-list">
-      <li><span class="ct-r">신랑</span><b>나창준</b><a class="ct-b" href="tel:010-0000-0000" aria-label="나창준에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:010-0000-0000" aria-label="나창준에게 문자">{{icon:message}}</a></li>
-      <li><span class="ct-r">아버지</span><b>나종수</b><a class="ct-b" href="tel:010-0000-0000" aria-label="나종수에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:010-0000-0000" aria-label="나종수에게 문자">{{icon:message}}</a></li>
-      <li><span class="ct-r">어머니</span><b>정희천</b><a class="ct-b" href="tel:010-0000-0000" aria-label="정희천에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:010-0000-0000" aria-label="정희천에게 문자">{{icon:message}}</a></li>
+      <li><span class="ct-r">신랑</span><b>나창준</b><a class="ct-b" href="tel:01083375338" data-ct="나창준" aria-label="나창준에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:01083375338" data-ct="나창준" aria-label="나창준에게 문자">{{icon:message}}</a></li>
+      <li><span class="ct-r">아버지</span><b>나종수</b><a class="ct-b" href="tel:01076056250" data-ct="나종수" aria-label="나종수에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:01076056250" data-ct="나종수" aria-label="나종수에게 문자">{{icon:message}}</a></li>
+      <li><span class="ct-r">어머니</span><b>정희천</b><a class="ct-b" href="tel:01098668847" data-ct="정희천" aria-label="정희천에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:01098668847" data-ct="정희천" aria-label="정희천에게 문자">{{icon:message}}</a></li>
     </ul></div>
     <div class="ct-grp"><h3>신부 측</h3><ul class="ct-list">
-      <li><span class="ct-r">신부</span><b>김영주</b><a class="ct-b" href="tel:010-0000-0000" aria-label="김영주에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:010-0000-0000" aria-label="김영주에게 문자">{{icon:message}}</a></li>
-      <li><span class="ct-r">아버지</span><b>김용식</b><a class="ct-b" href="tel:010-0000-0000" aria-label="김용식에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:010-0000-0000" aria-label="김용식에게 문자">{{icon:message}}</a></li>
-      <li><span class="ct-r">어머니</span><b>김영숙</b><a class="ct-b" href="tel:010-0000-0000" aria-label="김영숙에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:010-0000-0000" aria-label="김영숙에게 문자">{{icon:message}}</a></li>
+      <li><span class="ct-r">신부</span><b>김영주</b><a class="ct-b" href="tel:01023326110" data-ct="김영주" aria-label="김영주에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:01023326110" data-ct="김영주" aria-label="김영주에게 문자">{{icon:message}}</a></li>
+      <li><span class="ct-r">아버지</span><b>김용식</b><a class="ct-b" href="tel:01023056110" data-ct="김용식" aria-label="김용식에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:01023056110" data-ct="김용식" aria-label="김용식에게 문자">{{icon:message}}</a></li>
+      <li><span class="ct-r">어머니</span><b>김영숙</b><a class="ct-b" href="tel:01085556110" data-ct="김영숙" aria-label="김영숙에게 전화">{{icon:phone}}</a><a class="ct-b" href="sms:01085556110" data-ct="김영숙" aria-label="김영숙에게 문자">{{icon:message}}</a></li>
     </ul></div>
-    <p class="note">전화번호는 자리 표시예요. 확정되면 바꿔 넣어요.</p>
   </div>
 </div>
+<dialog class="ct-pop" id="ct-pop" aria-labelledby="ct-pop-t">
+  <p class="ct-pop-k" id="ct-pop-k"></p>
+  <h2 class="ct-pop-t" id="ct-pop-t"></h2>
+  <p class="ct-pop-n" id="ct-pop-n"></p>
+  <p class="ct-pop-h">휴대폰에서 누르면 전화·문자 앱이 바로 열려요.</p>
+  <div class="ct-pop-a"><button type="button" class="btn-line" data-ct-copy>{{icon:copy}}<span>번호 복사</span></button><button type="button" class="btn-line" data-ct-close>닫기</button></div>
+</dialog>
 <div class="sheet-wrap" id="sh-rsvp" hidden>
   <div class="sheet-bg" data-close></div>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rs-t" tabindex="-1">

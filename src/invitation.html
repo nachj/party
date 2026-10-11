@@ -68,8 +68,6 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
 .iv{margin-top:56px;text-align:left}
 .iv-h{font-family:var(--f-dis);font-style:italic;font-weight:400;font-size:40px;line-height:1.05;letter-spacing:-.02em;color:var(--ink);border-top:2px solid var(--ink);padding-top:12px}
 .iv-dek{margin-top:10px;font-size:15px;color:var(--sub)}
-.byline{display:flex;gap:18px;margin-top:16px;font-size:15px}
-.byline b{font-family:var(--f-ko);font-weight:700}
 .qa{margin-top:28px;border-bottom:1px solid var(--ink)}
 .qa .acc-i{border-top:1px solid var(--line)}
 .qa .acc-b{gap:14px;justify-content:flex-start;text-align:left;font-family:var(--f-ko);font-weight:600;font-size:17px;line-height:1.45;padding:14px 0;min-height:64px}
@@ -130,6 +128,12 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
 .gal .help{margin-top:12px}
 
 /* 오시는 길 */
+.nmap{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--tint)}
+.nmap-st{width:100%;height:100%;object-fit:cover;display:block}
+.nm-st{position:absolute;left:50%;top:50%}
+.nmap-st+.nm-st::after{content:"";position:absolute;left:50%;bottom:-7px;width:10px;height:10px;background:var(--acc);transform:translateX(-50%) rotate(45deg)}
+.nmap-cr{position:absolute;right:6px;bottom:4px;font-size:10px;color:#5B6475;background:rgba(252,252,253,.8);padding:1px 5px;border-radius:3px}
+.nmap .nm-pin{padding:6px 10px;border-radius:999px;background:var(--acc);color:#FCFCFD;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 10px rgba(28,74,199,.3);transform:translate(-50%,-140%)}
 .loc{text-align:left}
 .loc>h2{text-align:center}
 .loc .frame{margin-top:32px}
@@ -206,8 +210,8 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
     <h2 class="t rv" id="g-t">꿈 (夢)</h2>
     <ol class="dream rv">
       <li><span>잠자는 동안 일어나는 심리적 현상의 연속.</span></li>
-      <li><span>실현시키고 싶은 희망이나 이상(理想). <span class="nw">(→소망<sup>1</sup>, 소원<sup>1</sup>)</span></span></li>
-      <li><span>실현될 가능성이 아주 적거나 전혀 없는 허무한 기대나 생각. <span class="nw">(=몽상<sup>1</sup>)</span></span></li>
+      <li><span>실현시키고 싶은 희망이나 <span class="nw">이상(理想). (→소망<sup>1</sup>, 소원<sup>1</sup>)</span></span></li>
+      <li><span>실현될 가능성이 아주 적거나 전혀 없는 허무한 <span class="nw">기대나 생각. (=몽상<sup>1</sup>)</span></span></li>
     </ol>
     <i class="dream-dots" aria-hidden="true"></i>
     <p class="greet-p rv">포근한 꿈을 함께 꾸고,<br>서로의 꿈을 응원하며,<br><br>한때는 꿈이라 여겼던 순간을<br>이제 현실로 만들어가려 합니다.<br><br>저희 두 사람의 새로운 시작에<br>함께해 주시길 바랍니다.</p>
@@ -224,14 +228,13 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
     <div class="iv">
       <h3 class="iv-h rv"><em>Interview</em></h3>
       <p class="iv-dek rv">결혼을 앞둔 두 사람에게 세 가지를 물었습니다.</p>
-      <div class="byline rv"><p><span class="mono">신랑</span> <b>나창준</b></p><p><span class="mono">신부</span> <b>김영주</b></p></div>
       <div class="qa rv">
         <div class="acc-i"><h4><button type="button" class="acc-b" data-acc aria-expanded="false" aria-controls="qa1"><em>Q1</em><span>서로의 첫인상, 기억나세요?</span>{{icon:chevron-down:ico acc-chev}}</button></h4>
-          <div class="acc-p" id="qa1" hidden><p><b>창준</b>답변 자리예요. 두세 줄로 적어 주세요.</p><p><b>영주</b>답변 자리예요.</p></div></div>
+          <div class="acc-p" id="qa1" hidden><p><b>창준</b>처음 봤을 때 들었던 생각은 단 하나였던 것 같아요, 아 예쁘다</p><p><b>영주</b>저도 딱 하나의 생각이 들었던 것 같아요, 귀엽다...</p></div></div>
         <div class="acc-i"><h4><button type="button" class="acc-b" data-acc aria-expanded="false" aria-controls="qa2"><em>Q2</em><span>결혼을 결심한 순간은요?</span>{{icon:chevron-down:ico acc-chev}}</button></h4>
-          <div class="acc-p" id="qa2" hidden><p><b>창준</b>답변 자리예요. 두세 줄로 적어 주세요.</p><p><b>영주</b>답변 자리예요.</p></div></div>
+          <div class="acc-p" id="qa2" hidden><p><b>창준</b>첫 만남 때 반하고 결혼까지 생각했던 것 같아요 후후</p><p><b>영주</b>저는 창준이가 처음 해줬던 요리인 된장찌개 맛보고 평생 먹고 싶다는 생각이 들면서 결심했어요..!!</p></div></div>
         <div class="acc-i"><h4><button type="button" class="acc-b" data-acc aria-expanded="false" aria-controls="qa3"><em>Q3</em><span>하객분들께 한마디</span>{{icon:chevron-down:ico acc-chev}}</button></h4>
-          <div class="acc-p" id="qa3" hidden><p><b>창준</b>답변 자리예요. 두세 줄로 적어 주세요.</p><p><b>영주</b>답변 자리예요.</p></div></div>
+          <div class="acc-p" id="qa3" hidden><p><b>창준</b>귀중한 시간 내어 참석해주셔서 감사합니다. 귀엽게 봐주시구 응원해주시면 감사하겠습니다..!! 뷔페에서 맛있는 식사 하시구 배부르게 귀가하시기를 바라겠습니다..! 행복하고 귀엽게 살아보겠습니다.</p><p><b>영주</b>고맙 안뇽</p></div></div>
       </div>
     </div>
   </section>
@@ -263,7 +266,11 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
 
   <section class="sec loc" aria-labelledby="l-t">
     <h2 class="t rv" id="l-t">오시는 길</h2>
-    <div class="frame rv"><div class="frame-in">{{block:map}}</div></div>
+    <div class="frame rv"><div class="frame-in"><div class="nmap" id="nmap">
+      <img class="nmap-st" {{img:18}} alt="W스퀘어컨벤션 주변 지도: 판교역로226번길과 대왕판교로644번길 사이, 주유소 옆 건물">
+      <span class="nm-pin nm-st">W스퀘어컨벤션</span>
+      <small class="nmap-cr">© OpenStreetMap contributors</small>
+    </div></div></div>
     <div class="rv">{{block:addr}}</div>
     <div class="rv">{{block:mapbtns}}</div>
     <div class="rv"><div class="tr" data-tabs>
@@ -328,6 +335,20 @@ html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var
 </main>
 {{block:chrome}}
 <script>{{js}}</script>
+<script>
+/* 네이버 지도: NCP 콘솔 Maps Application(Dynamic Map · Web 서비스 URL = https://nachj.github.io)에서 받은 Client ID 를 아래에 넣는다.
+   비어 있거나 인증이 실패하면(로컬 파일·다른 주소) 정적 지도 그림(OpenStreetMap)이 그대로 보인다. */
+var NAVER_MAP_KEY_ID = '';
+(function(){var box=document.getElementById('nmap');if(!box||!NAVER_MAP_KEY_ID)return;
+var LAT=37.4005008,LNG=127.1114555,osm=box.innerHTML;
+window.navermap_authFailure=function(){box.innerHTML=osm};
+window.__nmapInit=function(){try{var c=new naver.maps.LatLng(LAT,LNG);
+  box.innerHTML='';var m=new naver.maps.Map(box,{center:c,zoom:16,draggable:false,pinchZoom:false,scrollWheel:false,keyboardShortcuts:false,disableDoubleClickZoom:true,zoomControl:true,zoomControlOptions:{position:naver.maps.Position.TOP_RIGHT,style:naver.maps.ZoomControlStyle.SMALL},mapDataControl:false,scaleControl:false,logoControlOptions:{position:naver.maps.Position.BOTTOM_LEFT}});
+  new naver.maps.Marker({position:c,map:m});
+  new naver.maps.Marker({position:c,map:m,icon:{content:'<div class="nm-pin">W스퀘어컨벤션</div>',anchor:new naver.maps.Point(0,0)}});
+}catch(e){box.innerHTML=osm}};
+var sc=document.createElement('script');sc.src='https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId='+encodeURIComponent(NAVER_MAP_KEY_ID)+'&callback=__nmapInit';sc.onerror=function(){box.innerHTML=osm};document.head.appendChild(sc);})();
+</script>
 <script>
 /* 엽서 묶음(A06 방식): 밀면 다음·이전 장 · 짧게 누르면 core 라이트박스(data-lb) · 끌었을 땐 클릭 막음 */
 (function(){var st=document.querySelector('[data-stackbox]');if(!st)return;var cards=[].slice.call(st.querySelectorAll('.pc')),ord=cards.slice(),R=[0,-2.6,2.2,-1.4,1.6,-1],busy=false,x0=0,dx=0,on=false,drag=false;

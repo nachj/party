@@ -221,6 +221,25 @@
   });
   document.addEventListener('click', e => { if (e.target.closest('[data-kpay]')) toast('카카오페이 송금 링크는 확정 후 연결돼요'); });
 
+  // 연락하기: 휴대폰 = tel:/sms: 그대로(전화·문자 앱) · 컴퓨터 = 이상한 앱 연결 대신 번호 팝업
+  const MOBILE = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+  const pop = $('#ct-pop');
+  const fmt = n => n.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[data-ct]'); if (!a || MOBILE || !pop) return;
+    e.preventDefault();
+    const num = a.getAttribute('href').replace(/^(tel|sms):/, ''), sms = a.href.startsWith('sms:');
+    $('#ct-pop-k').textContent = sms ? '문자 보내기' : '전화하기';
+    $('#ct-pop-t').textContent = a.dataset.ct; $('#ct-pop-n').textContent = fmt(num); pop.dataset.num = fmt(num);
+    pop.showModal ? pop.showModal() : pop.setAttribute('open', '');
+  });
+  if (pop) {
+    pop.addEventListener('click', async e => {
+      if (e.target === pop || e.target.closest('[data-ct-close]')) pop.close();
+      else if (e.target.closest('[data-ct-copy]')) { toast(await copyText(pop.dataset.num) ? '번호를 복사했어요' : '번호를 길게 눌러 복사해 주세요'); pop.close(); }
+    });
+  }
+
   // 음악: 상태 UI 만 (음원 없음, 자동재생 안 함)
   const mu = $('[data-music]');
   if (mu) mu.addEventListener('click', () => {
