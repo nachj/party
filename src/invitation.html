@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ko" data-id="a02" data-op="2800">
+<head>
+{{block:head}}
+<meta name="theme-color" content="#FCFCFD">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Gowun+Batang:wght@400;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;1,6..96,400&family=Geist+Mono:wght@400&display=swap">
+{{block:pretendard}}
+<style>
+{{css}}
+/* A02 액자형 미니멀: 모든 블록이 같은 액자(매트 + 코발트 1px 선) · 직각 */
+:root{--bg:#FCFCFD;--ink:#1D2433;--acc:#1C4AC7;--tint:#EAF0FC;--on-acc:#FCFCFD;--sub:#5B6475;--line:rgba(29,36,51,.16);--line-strong:#1C4AC7;
+  --sheet-bg:#FCFCFD;--inp-bg:#FCFCFD;--card-bg:#EAF0FC;--map-bg:#FCFCFD;--map-road:#EAF0FC;--map-label:#5B6475;
+  --r-card:0;--r-btn:4px;--r-field:0;--r-sheet:0;--r-toast:4px;--toast-bg:#1D2433;--mu-bg:rgba(252,252,253,.86);--mu-fg:#1C4AC7;--mu-ring:rgba(28,74,199,.35);
+  --f-en:'EB Garamond','Gowun Batang',Georgia,serif;--f-ko:'Gowun Batang','Apple SD Gothic Neo',serif;--f-dis:'Bodoni Moda','Gowun Batang',Didot,serif;--f-mono:'Geist Mono',ui-monospace,monospace;
+  --f-body:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;--sheet-title:700 20px/1.4 var(--f-ko);--rv-y:12px;--rv-t:.7s}
+.b-ic{border-radius:0}
+.music{border-radius:4px}
+.sec{padding:96px 24px 0;text-align:center}
+.sec::before{content:"";display:block;width:1px;height:40px;margin:0 auto 28px;background:var(--acc)}
+.t{font-family:var(--f-ko);font-weight:700;font-size:20px;letter-spacing:.24em;padding-left:.24em}
+.t-en{font-family:var(--f-en);font-style:italic;font-size:30px;letter-spacing:.01em}
+.lead{margin-top:12px;font-size:15px;color:var(--sub)}
+
+/* 액자 */
+.frame{position:relative;padding:10px;background:var(--tint)}
+.frame-in{position:relative;padding:6px;box-shadow:inset 0 0 0 1px var(--acc)}
+.frame-in.drawn{box-shadow:none}
+.e{position:absolute;background:var(--acc)}
+.e-t{left:0;right:0;top:0;height:1px;transform-origin:left}
+.e-r{top:0;bottom:0;right:0;width:1px;transform-origin:top}
+.e-b{left:0;right:0;bottom:0;height:1px;transform-origin:right}
+.e-l{top:0;bottom:0;left:0;width:1px;transform-origin:bottom}
+
+/* 표지 · A03 매거진형(10-11 사용자 지시) */
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)}
+.cover{position:relative;min-height:100dvh;display:flex;flex-direction:column;justify-content:flex-start;padding:calc(22px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom));overflow:hidden}
+.cv-folio{display:flex;gap:14px;padding-right:56px;min-height:44px;align-items:center}
+.mast{position:relative;z-index:2;margin-top:auto;padding-top:6px;font-family:var(--f-dis);font-weight:700;font-size:min(34vw,160px);line-height:.82;letter-spacing:-.035em;color:var(--acc);white-space:nowrap}
+.mk{display:block;overflow:hidden;padding-bottom:.03em}
+.mk.r{text-align:right}
+.mk-in{display:block}
+.cv-body{position:relative;display:grid;grid-template-columns:20px 1fr;gap:0 12px;margin-top:-.42em;font-size:min(34vw,160px)}
+.cv-side{font-size:12px;writing-mode:vertical-rl;transform:rotate(180deg);align-self:end;white-space:nowrap}
+.cv-ph{position:relative;z-index:1;font-size:16px}
+.cv-ph img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 70%}
+.badge{position:absolute;left:-30px;top:5%;z-index:3;width:116px;height:116px;animation:spin 24s linear infinite}
+.cv-credit{display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px;margin-top:auto;padding-top:18px}
+.cv-names{font-family:var(--f-ko);font-weight:600;font-size:23px;letter-spacing:.02em}
+.cv-names i{font-family:var(--f-dis);font-style:italic;font-weight:400;color:var(--acc);margin:0 4px}
+.cv-meta{font-size:14px;line-height:1.6;color:var(--sub);text-align:right}
+@keyframes spin{to{transform:rotate(360deg)}}
+html.play .mk{animation:mkO 1s var(--ease) .2s both}
+html.play .mk-in{animation:mkI 1s var(--ease) .2s both}
+html.play .mk.r,html.play .mk.r .mk-in{animation-delay:.34s}
+html.play .cv-ph{animation:phup .9s var(--ease) 1.05s both}
+html.play .badge{animation:pop .6s var(--ease) 1.5s both,spin 24s linear 1.5s infinite}
+html.play .cv-credit,html.play .cv-side,html.play .cv-folio{animation:fd .8s var(--ease) 1.5s both}
+@keyframes mkO{from{transform:translateX(-101%)}}
+@keyframes mkI{from{transform:translateX(101%)}}
+@keyframes phup{from{opacity:0;transform:translateY(8px)}}
+@keyframes pop{from{opacity:0;transform:scale(.9)}}
+@keyframes sx{from{transform:scaleX(0)}}
+@keyframes sy{from{transform:scaleY(0)}}
+@keyframes fd{from{opacity:0}}
+@keyframes fdu{from{opacity:0;transform:translateY(10px)}}
+
+/* 인사말 */
+.iv{margin-top:56px;text-align:left}
+.iv-h{font-family:var(--f-dis);font-style:italic;font-weight:400;font-size:40px;line-height:1.05;letter-spacing:-.02em;color:var(--ink);border-top:2px solid var(--ink);padding-top:12px}
+.iv-dek{margin-top:10px;font-size:15px;color:var(--sub)}
+.byline{display:flex;gap:18px;margin-top:16px;font-size:15px}
+.byline b{font-family:var(--f-ko);font-weight:700}
+.qa{margin-top:28px;border-bottom:1px solid var(--ink)}
+.qa .acc-i{border-top:1px solid var(--line)}
+.qa .acc-b{gap:14px;justify-content:flex-start;text-align:left;font-family:var(--f-ko);font-weight:600;font-size:17px;line-height:1.45;padding:14px 0;min-height:64px}
+.qa .acc-b em{flex:none;font-family:var(--f-dis);font-style:italic;font-weight:400;font-size:24px;color:var(--acc);width:34px}
+.qa .acc-b span{flex:1}
+.qa .acc-p{padding:0 0 20px 48px;font-size:15px;line-height:1.8}
+.qa .acc-p p+p{margin-top:8px}
+.qa .acc-p b{font-family:var(--f-ko);font-weight:600;margin-right:8px}
+.dream{margin:26px auto 0;padding:0;list-style:none;counter-reset:d;max-width:330px;text-align:left;font-size:13px;line-height:1.75;color:var(--sub)}
+.dream li{counter-increment:d;display:grid;grid-template-columns:18px 1fr;margin-top:4px}
+.dream li::before{content:counter(d) ".";color:var(--acc);font-weight:600}
+.dream .nw{white-space:nowrap}
+.dream sup{font-size:.7em;line-height:0}
+.credits-music{margin-top:6px;font-size:12px;color:var(--sub)}
+.dream-dots{display:block;width:2px;height:30px;margin:22px auto 0;background:radial-gradient(circle,var(--acc) 1px,transparent 1.4px) 0 0/2px 10px repeat-y;opacity:.6}
+.greet-p{margin-top:22px;font-family:var(--f-ko);font-size:16px;line-height:2.15}
+.parents{margin:40px 0 32px;display:grid;gap:10px}
+.parents p{display:flex;justify-content:center;align-items:baseline;gap:2px;font-size:16px}
+.parents .rel{font-size:14px;color:var(--sub);margin-right:10px}
+.parents b{font-family:var(--f-ko);font-weight:700;font-size:17px}
+
+/* 소개 */
+.cp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:32px}
+.cp .frame-in{padding:26px 8px 22px}
+.cp-role{font-family:var(--f-en);font-style:italic;font-size:19px;color:var(--acc)}
+.cp-name{margin-top:6px;font-family:var(--f-ko);font-size:22px;letter-spacing:.1em;padding-left:.1em}
+.cp-line{margin-top:10px;font-size:14px;line-height:1.6;color:var(--sub)}
+
+/* 달력 */
+.day .frame{margin-top:32px}
+.day .frame-in{padding:22px 12px 16px;background:var(--bg)}
+.cal-h{font-family:var(--f-en);font-size:34px;line-height:1;margin-bottom:18px}
+.cal-h small{font-size:15px;font-style:italic;color:var(--sub);margin-left:8px;letter-spacing:.04em}
+.cal{border-top:1px solid var(--line)}
+.cal th{padding-top:12px}
+.cal td span{width:38px;height:38px}
+.cal td.sun{color:var(--acc)}
+.cal .on span{background:var(--acc);color:#FCFCFD;font-weight:600}
+.cd{margin-top:22px;gap:6px}
+.cd>div{padding:14px 0 10px;background:var(--tint)}
+.cd b{font-family:var(--f-en);font-size:30px;line-height:1}
+.cd small{margin-top:6px}
+.cd-msg{margin-top:20px}
+.day .btn-line{margin-top:22px}
+
+/* 갤러리: 3열 1:1 격자 9장, 액자 하나 */
+/* 갤러리 · A06 엽서 묶음(10-11 사용자 지시) */
+.stack{position:relative;aspect-ratio:3/2.36;margin:32px 4px 0;touch-action:pan-y}
+.pc{position:absolute;left:0;right:0;top:0;margin:0;aspect-ratio:3/2;background:#FCFCFD;padding:8px;border-radius:4px;box-shadow:0 12px 26px rgba(29,36,51,.14);transform:translateY(var(--y,0)) rotate(var(--r,0deg));transition:transform .5s var(--ease),opacity .4s var(--ease)}
+.pc button{display:block;width:100%;height:100%;padding:0;cursor:zoom-in;background:var(--tint)}
+.pc img{width:100%;height:100%;object-fit:cover;border-radius:2px;pointer-events:none;-webkit-user-drag:none;user-select:none}
+.stack-ctl{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.stack-ctl button{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--acc);box-shadow:inset 0 0 0 1px var(--line);background:#FCFCFD;transition:transform .16s var(--ease)}
+.stack-ctl button:active{transform:scale(.94)}
+.stack-ctl p{font-size:14px;color:var(--sub)}
+@media (prefers-reduced-motion:reduce){.pc{transition:none}}
+@media (hover:hover) and (pointer:fine){.g9 button:hover img{transform:scale(1.04)}}
+.gal .help{margin-top:12px}
+
+/* 오시는 길 */
+.loc{text-align:left}
+.loc>h2{text-align:center}
+.loc .frame{margin-top:32px}
+.loc .frame-in{padding:6px}
+.smap figcaption{padding:4px 2px 0}
+.loc .addr,.loc .mapbtns,.loc .tr{margin-top:22px}
+.tr .tabs{box-shadow:inset 0 -1px 0 var(--line)}
+.tr-p p+p{margin-top:14px}
+.loc-tel{margin-top:20px;text-align:center;font-size:15px;color:var(--sub)}
+.loc-tel a{color:var(--acc);font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:10px 4px}
+
+.info-c{box-shadow:inset 0 0 0 1px var(--acc);background:var(--bg);outline:10px solid var(--tint);outline-offset:-10px;padding:30px 26px}
+
+/* 마음: 세그먼트 탭 */
+.accseg{margin-top:28px;text-align:left}
+.accseg .tabs{box-shadow:inset 0 0 0 1px var(--acc)}
+.accseg [role=tab]{position:relative;z-index:1;color:var(--acc)}
+.accseg [role=tab][aria-selected=true]{color:#FCFCFD}
+.accseg .tab-ind{top:0;height:100%}
+.accseg [role=tabpanel]{padding-top:6px}
+
+/* RSVP */
+.rsvp .frame{margin-top:32px}
+.rsvp .frame-in{padding:34px 22px 26px;background:var(--bg)}
+.rsvp .lead{margin:0 0 22px}
+.rsvp-st{margin-top:12px;font-size:14px;color:var(--acc);font-weight:600}
+.rsvp-st:empty{display:none}
+
+/* 방명록: 2열 액자 카드 */
+.gbs .gb{margin-top:28px}
+.gb-list{grid-template-columns:1fr 1fr;text-align:left}
+.gb-card{box-shadow:inset 0 0 0 1px var(--acc);outline:6px solid var(--tint);outline-offset:-6px;padding:20px 16px 8px;background:var(--bg)}
+.gb-card .gb-meta{flex-wrap:wrap}
+.gb-empty{box-shadow:inset 0 0 0 1px var(--acc)}
+
+/* 하객 사진 */
+.gps .gp{margin-top:28px;box-shadow:inset 0 0 0 1px var(--acc);outline:10px solid var(--tint);outline-offset:-10px;padding:40px 26px 22px;background:var(--bg)}
+
+/* 엔딩 */
+.end{padding:96px 24px calc(48px + env(safe-area-inset-bottom));text-align:center}
+.end::before{content:"";display:block;width:1px;height:40px;margin:0 auto 28px;background:var(--acc)}
+.end .frame{width:min(62vw,240px);margin:0 auto}
+.end img{width:100%;aspect-ratio:4/5;object-fit:cover}
+/* 엔딩 크레딧 롤 · A04 에서 가져옴(10-11 사용자 지시) */
+.roll{position:relative;height:62dvh;margin-top:28px;overflow:hidden;-webkit-mask:linear-gradient(transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(transparent,#000 18%,#000 82%,transparent)}
+.roll-in{display:grid;gap:26px;padding:20px 0}
+.roll-in dt{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;color:var(--sub)}
+.roll-in dd{margin:4px 0 0;font-family:var(--f-ko);font-size:17px}
+.roll-in .fin{font-family:var(--f-ko);font-size:24px;line-height:1.5}
+.roll-in .fin b{display:block;margin-bottom:6px;font-family:var(--f-en);font-style:italic;font-weight:400;font-size:30px;color:var(--acc)}
+.roll.in .roll-in{animation:roll 20s linear .3s both}
+@keyframes roll{from{transform:translateY(56dvh)}to{transform:translateY(calc(-100% + 34dvh))}}
+.end .share{margin-top:30px}
+@media (prefers-reduced-motion:reduce){.roll{height:auto;-webkit-mask:none;mask:none}.roll.in .roll-in{animation:none}}
+</style>
+</head>
+<body>
+<div id="opening" aria-hidden="true"><p class="op-skip">화면을 누르면 바로 넘어가요</p></div>
+<main class="page">
+  <header class="cover">
+    <div class="cv-folio mono"><span>Spring 2027</span><span>Pangyo, Seongnam</span></div>
+    <h1 class="mast"><span class="mk"><span class="mk-in">MAY</span></span><span class="mk r"><span class="mk-in">29</span></span><span class="sr">나창준 김영주 결혼합니다</span></h1>
+    <div class="cv-body">
+      <p class="cv-side mono">Changjoon &amp; Youngju</p>
+      <figure class="cv-ph">
+        <img class="prot" {{img:17}} alt="돌담 앞 초원에 나란히 선 창준과 영주" fetchpriority="high">
+        <svg class="badge" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="bp" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><circle cx="50" cy="50" r="49" fill="#FCFCFD" stroke="#1C4AC7" stroke-width=".8"/><text font-size="10.4" fill="#1C4AC7" font-family="Geist Mono, monospace" textLength="236" lengthAdjust="spacing"><textPath href="#bp">CHANGJOON &amp; YOUNGJU · MAY 29 · </textPath></text><circle cx="50" cy="50" r="4" fill="#1C4AC7"/></svg>
+      </figure>
+    </div>
+    <div class="cv-credit"><p class="cv-names">나창준<i>&amp;</i>김영주</p><p class="cv-meta">2027. 5. 29 토 오후 2:30<br>W스퀘어컨벤션 그레이스홀</p></div>
+  </header>
+
+  <section class="sec greet" aria-labelledby="g-t">
+    <h2 class="t rv" id="g-t">꿈 (夢)</h2>
+    <ol class="dream rv">
+      <li><span>잠자는 동안 일어나는 심리적 현상의 연속.</span></li>
+      <li><span>실현시키고 싶은 희망이나 이상(理想). <span class="nw">(→소망<sup>1</sup>, 소원<sup>1</sup>)</span></span></li>
+      <li><span>실현될 가능성이 아주 적거나 전혀 없는 허무한 기대나 생각. <span class="nw">(=몽상<sup>1</sup>)</span></span></li>
+    </ol>
+    <i class="dream-dots" aria-hidden="true"></i>
+    <p class="greet-p rv">포근한 꿈을 함께 꾸고,<br>서로의 꿈을 응원하며,<br><br>한때는 꿈이라 여겼던 순간을<br>이제 현실로 만들어가려 합니다.<br><br>저희 두 사람의 새로운 시작에<br>함께해 주시길 바랍니다.</p>
+    <div class="rv">{{block:parents}}</div>
+    <div class="rv">{{block:contact-btn}}</div>
+  </section>
+
+  <section class="sec couple" aria-labelledby="c-t">
+    <h2 class="t-en rv" id="c-t">The two of us</h2>
+    <div class="cp-grid">
+      <div class="cp frame rv"><div class="frame-in"><p class="cp-role">Groom</p><p class="cp-name">나창준</p><p class="cp-line">영주의 가장<br>든든한 편</p></div></div>
+      <div class="cp frame rv" style="--i:1"><div class="frame-in"><p class="cp-role">Bride</p><p class="cp-name">김영주</p><p class="cp-line">창준의 가장<br>다정한 편</p></div></div>
+    </div>
+    <div class="iv">
+      <h3 class="iv-h rv"><em>Interview</em></h3>
+      <p class="iv-dek rv">결혼을 앞둔 두 사람에게 세 가지를 물었습니다.</p>
+      <div class="byline rv"><p><span class="mono">신랑</span> <b>나창준</b></p><p><span class="mono">신부</span> <b>김영주</b></p></div>
+      <div class="qa rv">
+        <div class="acc-i"><h4><button type="button" class="acc-b" data-acc aria-expanded="false" aria-controls="qa1"><em>Q1</em><span>서로의 첫인상, 기억나세요?</span>{{icon:chevron-down:ico acc-chev}}</button></h4>
+          <div class="acc-p" id="qa1" hidden><p><b>창준</b>답변 자리예요. 두세 줄로 적어 주세요.</p><p><b>영주</b>답변 자리예요.</p></div></div>
+        <div class="acc-i"><h4><button type="button" class="acc-b" data-acc aria-expanded="false" aria-controls="qa2"><em>Q2</em><span>결혼을 결심한 순간은요?</span>{{icon:chevron-down:ico acc-chev}}</button></h4>
+          <div class="acc-p" id="qa2" hidden><p><b>창준</b>답변 자리예요. 두세 줄로 적어 주세요.</p><p><b>영주</b>답변 자리예요.</p></div></div>
+        <div class="acc-i"><h4><button type="button" class="acc-b" data-acc aria-expanded="false" aria-controls="qa3"><em>Q3</em><span>하객분들께 한마디</span>{{icon:chevron-down:ico acc-chev}}</button></h4>
+          <div class="acc-p" id="qa3" hidden><p><b>창준</b>답변 자리예요. 두세 줄로 적어 주세요.</p><p><b>영주</b>답변 자리예요.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec day" aria-labelledby="d-t">
+    <h2 class="t rv" id="d-t">예식 날</h2>
+    <p class="lead rv">2027년 5월 29일 토요일 오후 2시 30분</p>
+    <div class="frame rv"><div class="frame-in">
+      <p class="cal-h">5<small>May 2027</small></p>
+      {{cal}}
+    </div></div>
+    <div class="cd rv" role="timer" aria-label="예식까지 남은 시간"><div><b data-cd-d>0</b><small>DAYS</small></div><div><b data-cd-h>00</b><small>HOUR</small></div><div><b data-cd-m>00</b><small>MIN</small></div><div><b data-cd-s>00</b><small>SEC</small></div></div>
+    <div class="rv">{{block:cd-msg}}</div>
+    <div class="rv">{{block:ics-btn}}</div>
+  </section>
+
+  <section class="sec gal" aria-labelledby="ga-t">
+    <h2 class="t-en rv" id="ga-t">Gallery</h2>
+    <div class="stack rv" data-gallery data-stackbox aria-roledescription="엽서 묶음" aria-label="사진 엽서 여섯 장. 옆으로 밀면 다음 장, 누르면 크게 보기">
+      <figure class="pc"><button type="button" data-lb aria-label="1번째 사진 크게 보기"><img {{img:08}} alt="언덕 멀리 서 있는 두 사람" draggable="false"></button></figure>
+      <figure class="pc"><button type="button" data-lb aria-label="2번째 사진 크게 보기"><img {{img:12}} alt="드레스와 정장 차림으로 손을 잡은 모습" draggable="false"></button></figure>
+      <figure class="pc"><button type="button" data-lb aria-label="3번째 사진 크게 보기"><img {{img:13}} alt="반지를 낀 두 손" draggable="false"></button></figure>
+      <figure class="pc"><button type="button" data-lb aria-label="4번째 사진 크게 보기"><img {{img:14}} alt="식장 버진로드의 손과 부케" draggable="false"></button></figure>
+      <figure class="pc"><button type="button" data-lb aria-label="5번째 사진 크게 보기"><img {{img:16}} alt="흰 꽃과 초록 잎 부케" draggable="false"></button></figure>
+      <figure class="pc"><button type="button" data-lb aria-label="6번째 사진 크게 보기"><img {{img:09}} alt="가로수 사이를 걷는 두 사람" draggable="false"></button></figure>
+    </div>
+    <div class="stack-ctl rv"><button type="button" data-stack="-1" aria-label="이전 엽서">{{icon:chevron-left}}</button><p>밀어서 넘기고, 눌러서 크게</p><button type="button" data-stack="1" aria-label="다음 엽서">{{icon:chevron-right}}</button></div>
+  </section>
+
+  <section class="sec loc" aria-labelledby="l-t">
+    <h2 class="t rv" id="l-t">오시는 길</h2>
+    <div class="frame rv"><div class="frame-in">{{block:map}}</div></div>
+    <div class="rv">{{block:addr}}</div>
+    <div class="rv">{{block:mapbtns}}</div>
+    <div class="rv"><div class="tr" data-tabs>
+      <div class="tabs" role="tablist" aria-label="교통편">
+        <button role="tab" type="button" id="tr-t1" aria-controls="tr-p1">{{icon:train}}<span>지하철</span></button>
+        <button role="tab" type="button" id="tr-t2" aria-controls="tr-p2">{{icon:bus}}<span>버스</span></button>
+        <button role="tab" type="button" id="tr-t3" aria-controls="tr-p3">{{icon:car}}<span>자가용</span></button>
+        <span class="tab-ind" aria-hidden="true"></span>
+      </div>
+      <div role="tabpanel" id="tr-p1" aria-labelledby="tr-t1" class="tr-p"><p><b>신분당선 · 경강선 판교역 1번 출구</b>나와서 직진, 도보 6분 (SK주유소 뒷 건물)</p><p><b>야탑역에서 오실 때</b>330번 버스 → 차그룹컨소시엄 정류장 하차, 도보 3분 (총 약 20분)</p></div>
+      <div role="tabpanel" id="tr-p2" aria-labelledby="tr-t2" class="tr-p" hidden><p><b>동안교 정류장</b>390번 · 내려서 도보 2분</p><p><b>한국무역정보통신 정류장</b>4000번 (수원~성남) · 내려서 도보 2분</p><p><b>차그룹컨소시엄 정류장</b>101 · 330 · 350 · 390번 · 내려서 도보 3분</p></div>
+      <div role="tabpanel" id="tr-p3" aria-labelledby="tr-t3" class="tr-p" hidden><p><b>경부고속도로</b>판교IC(톨게이트) 나와서 좌회전 → 약 700m 직진 → 사거리에서 우회전 (SK주유소 뒷 건물)</p><p><b>분당·수서간 도시고속도로</b>성남아트센터 방면 지하차도 옆길 → 벌말사거리에서 우회전 → 삼성테크원 삼거리에서 판교역 방면 좌회전</p><p><b>주차</b>예식장 내 무료 주차 가능</p></div>
+    </div></div>
+    <p class="loc-tel rv">예식장 문의 <a href="tel:031-703-0116">031-703-0116</a></p>
+  </section>
+
+
+  <section class="sec gift" aria-labelledby="m-t">
+    <h2 class="t rv" id="m-t">마음 전하실 곳</h2>
+    <p class="lead rv">참석이 어려우신 분들을 위해 계좌를 적어 두었어요.</p>
+    <div class="rv">{{block:accseg}}</div>
+  </section>
+
+  <section class="sec rsvp" aria-labelledby="r-t">
+    <h2 class="t rv" id="r-t">참석 여부</h2>
+    <div class="frame rv"><div class="frame-in">
+      <p class="lead">미리 알려 주시면 자리와 식사를<br>넉넉히 준비할게요.</p>
+      {{block:rsvp-btn}}
+    </div></div>
+  </section>
+
+  <section class="sec gbs" aria-labelledby="b-t">
+    <h2 class="t rv" id="b-t">방명록</h2>
+    <div class="rv">{{block:gb}}</div>
+  </section>
+
+  <section class="sec gps" aria-labelledby="p-t">
+    <h2 class="t rv" id="p-t">그날의 사진</h2>
+    <div class="rv">{{block:gp}}</div>
+  </section>
+
+  <footer class="end">
+    <div class="frame rv"><div class="frame-in"><img class="prot" {{img:05}} alt="붉은 꽃 부케를 든 신부"></div></div>
+    <div class="roll rv" role="region" aria-label="엔딩 크레딧">
+      <dl class="roll-in">
+        <div><dt>GROOM</dt><dd>나창준</dd></div>
+        <div><dt>BRIDE</dt><dd>김영주</dd></div>
+        <div><dt>PARENTS OF THE GROOM</dt><dd>나종수 · 정희천</dd></div>
+        <div><dt>PARENTS OF THE BRIDE</dt><dd>김용식 · 김영숙</dd></div>
+        <div><dt>VENUE</dt><dd>W스퀘어컨벤션 L층 그레이스홀</dd></div>
+        <div><dt>RELEASE</dt><dd>2027. 5. 29 SAT 2:30 PM</dd></div>
+        <div><dt>MUSIC</dt><dd>Canon in D · Pachelbel</dd></div>
+        <div><dt>SPECIAL THANKS</dt><dd>이 장면을 함께 채워 주실 모든 분</dd></div>
+        <div><dd class="fin"><b>Thank you</b>함께해 주셔서<br>고맙습니다.</dd></div>
+      </dl>
+    </div>
+    {{block:share}}
+    {{block:credits}}
+    <p class="credits-music">음악: Pachelbel, Canon in D · United States Air Force Band Strolling Strings (퍼블릭 도메인 · 시안용 앞 2분)</p>
+    <audio data-bgm src="bgm-canon.mp3" loop preload="none"></audio>
+  </footer>
+</main>
+{{block:chrome}}
+<script>{{js}}</script>
+<script>
+/* 엽서 묶음(A06 방식): 밀면 다음·이전 장 · 짧게 누르면 core 라이트박스(data-lb) · 끌었을 땐 클릭 막음 */
+(function(){var st=document.querySelector('[data-stackbox]');if(!st)return;var cards=[].slice.call(st.querySelectorAll('.pc')),ord=cards.slice(),R=[0,-2.6,2.2,-1.4,1.6,-1],busy=false,x0=0,dx=0,on=false,drag=false;
+function lay(){ord.forEach(function(c,k){c.style.zIndex=ord.length-k;c.style.setProperty('--y',(k*10)+'px');c.style.setProperty('--r',R[k]+'deg');c.style.opacity=k<4?1:0;c.setAttribute('aria-hidden',k>0?'true':'false');c.querySelector('button').tabIndex=k>0?-1:0})}
+lay();
+function nx(dir){if(busy)return;busy=true;if(dir>0){var t=ord[0];t.style.transform='translateX(-125%) rotate(-12deg)';t.style.opacity=0;setTimeout(function(){t.style.transition='none';ord.push(ord.shift());t.style.transform='';lay();t.offsetHeight;t.style.transition='';busy=false},360)}
+ else{var l=ord.pop();ord.unshift(l);l.style.transition='none';l.style.transform='translateX(125%) rotate(12deg)';l.style.opacity=0;l.offsetHeight;l.style.transition='';lay();l.style.transform='';setTimeout(function(){busy=false},420)}}
+st.addEventListener('pointerdown',function(e){on=true;drag=false;x0=e.clientX;dx=0;ord[0].style.transition='none'});
+window.addEventListener('pointermove',function(e){if(!on)return;dx=e.clientX-x0;if(Math.abs(dx)>8)drag=true;if(drag)ord[0].style.transform='translateX('+dx+'px) rotate('+(dx/26)+'deg)'});
+function up(){if(!on)return;on=false;var t=ord[0];t.style.transition='';if(dx<-50)nx(1);else{t.style.transform='';if(dx>50)nx(-1)}}
+window.addEventListener('pointerup',up);window.addEventListener('pointercancel',function(){if(!on)return;on=false;ord[0].style.transition='';ord[0].style.transform=''});
+st.addEventListener('click',function(e){if(drag){e.stopPropagation();e.preventDefault();drag=false}},true);
+st.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){nx(1);ord[0].querySelector('button').focus()}if(e.key==='ArrowLeft'){nx(-1);ord[0].querySelector('button').focus()}});
+document.querySelectorAll('[data-stack]').forEach(function(b){b.addEventListener('click',function(){nx(+b.dataset.stack)})});})();
+</script>
+</body>
+</html>

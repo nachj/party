@@ -1,5 +1,8 @@
-*.bak
 __pycache__/
 *.py[cod]
+src/photos/_small/
+src/photo-edit/original.jpg
+src/photo-edit/compare.jpg
+*.bak*
 .DS_Store
 Thumbs.db
